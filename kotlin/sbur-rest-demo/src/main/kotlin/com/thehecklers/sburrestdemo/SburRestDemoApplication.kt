@@ -1,7 +1,12 @@
 package com.thehecklers.sburrestdemo
 
 import org.springframework.boot.autoconfigure.SpringBootApplication
+import org.springframework.boot.context.properties.ConfigurationProperties
+import org.springframework.boot.context.properties.ConfigurationPropertiesScan
+import org.springframework.boot.context.properties.ConstructorBinding
+import org.springframework.boot.context.properties.bind.Name
 import org.springframework.boot.runApplication
+import org.springframework.context.annotation.Bean
 import org.springframework.data.repository.CrudRepository
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
@@ -12,8 +17,14 @@ import javax.annotation.PostConstruct
 import javax.persistence.Entity
 import javax.persistence.Id
 
+
 @SpringBootApplication
-class SburRestDemoApplication
+@ConfigurationPropertiesScan
+class SburRestDemoApplication {
+    @Bean
+    @ConfigurationProperties(prefix = "droid")
+    fun createDroid() = Droid()
+}
 
 fun main(args: Array<String>) {
     runApplication<SburRestDemoApplication>(*args)
@@ -30,6 +41,20 @@ class DataLoader(private val coffeeRepository: CoffeeRepository) {
             Coffee("Café Três Pontas")
         )
     )
+}
+
+@RestController
+@RequestMapping("/droid")
+class DroidController(@get:GetMapping val droid: Droid)
+
+@RestController
+@RequestMapping("/greeting")
+class GreetingController(private val greeting: Greeting) {
+    @GetMapping
+    fun getGreeting() = greeting.name
+
+    @GetMapping("/coffee")
+    fun getNameAndCoffee() = greeting.coffee
 }
 
 @RestController
@@ -58,6 +83,18 @@ class RestApiDemoController(private val coffeeRepository: CoffeeRepository) {
     @DeleteMapping("/{id}")
     fun deleteCoffee(@PathVariable id: String) = coffeeRepository.deleteById(id)
 }
+
+class Droid {
+    var id: String? = null
+    var description: String? = null
+}
+
+@ConfigurationProperties(prefix = "greeting")
+@ConstructorBinding
+class Greeting(
+    val name: String,
+    val coffee: String
+)
 
 interface CoffeeRepository : CrudRepository<Coffee, String>
 
