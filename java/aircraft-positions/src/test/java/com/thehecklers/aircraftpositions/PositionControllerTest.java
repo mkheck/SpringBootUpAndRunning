@@ -8,6 +8,7 @@ import org.springframework.boot.test.autoconfigure.web.reactive.WebFluxTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.context.ApplicationContext;
 import org.springframework.test.web.reactive.server.WebTestClient;
+import reactor.core.publisher.Flux;
 
 import java.time.Instant;
 import java.util.List;
@@ -17,7 +18,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 @WebFluxTest(controllers = {PositionController.class})
 class PositionControllerTest {
     @MockBean
-    private PositionRetriever retriever;
+    private AircraftRepository repository;
 
     private Aircraft ac1, ac2;
 
@@ -41,11 +42,11 @@ class PositionControllerTest {
                 true, false,
                 Instant.now(), Instant.now(), Instant.now());
 
-        Mockito.when(retriever.retrieveAircraftPositions())
-                .thenReturn(List.of(ac1, ac2));
+        Mockito.when(repository.findAll())
+                .thenReturn(Flux.just(ac1, ac2));
     }
 
-    @Test
+    @Test   // NOTE: This test fails prior to refactoring
     void getCurrentAircraftPositions(@Autowired WebTestClient client) {
         final Iterable<Aircraft> acPositions = client.get()
                 .uri("/aircraft")

@@ -1,16 +1,14 @@
 package com.thehecklers.aircraftpositions
 
 import com.fasterxml.jackson.annotation.JsonProperty
+import org.springframework.data.annotation.Id
+import org.springframework.data.mongodb.core.mapping.Document
 import java.time.Instant
-import javax.persistence.Entity
-import javax.persistence.GeneratedValue
-import javax.persistence.Id
 
-@Entity
+@Document
 data class Aircraft(
     @Id
-    @GeneratedValue
-    val id: Long? = null,
+    val id: String? = null,
     val callsign: String? = null,
     val squawk: String? = null,
     val reg: String? = null,
