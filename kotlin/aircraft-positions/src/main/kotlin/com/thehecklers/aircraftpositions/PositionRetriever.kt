@@ -5,12 +5,14 @@ import org.springframework.web.reactive.function.client.WebClient
 import org.springframework.web.reactive.function.client.bodyToFlux
 
 @Component
-class PositionRetriever(private val repository: AircraftRepository, private val client: WebClient) {
-    fun retrieveAircraftPositions(endpoint: String?): Iterable<Aircraft> {
+class PositionRetriever(private val repository: AircraftRepository) {
+    private val client = WebClient.create("http://localhost:7634")
+
+    fun retrieveAircraftPositions(): Iterable<Aircraft> {
         repository.deleteAll()
 
         client.get()
-            .uri(if (!endpoint.isNullOrEmpty()) endpoint else "")
+            .uri("/aircraft")
             .retrieve()
             .bodyToFlux<Aircraft>()
             .filter { !it.reg.isNullOrEmpty() }

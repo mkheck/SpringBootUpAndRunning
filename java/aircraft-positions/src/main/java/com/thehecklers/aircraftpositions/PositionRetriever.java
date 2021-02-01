@@ -8,13 +8,14 @@ import org.springframework.web.reactive.function.client.WebClient;
 @Component
 public class PositionRetriever {
     private final AircraftRepository repository;
-    private final WebClient client;
+    private final WebClient client =
+            WebClient.create("http://localhost:7634");
 
-    Iterable<Aircraft> retrieveAircraftPositions(String endpoint) {
+    Iterable<Aircraft> retrieveAircraftPositions() {
         repository.deleteAll();
 
         client.get()
-                .uri((null != endpoint) ? endpoint : "")
+                .uri("/aircraft")
                 .retrieve()
                 .bodyToFlux(Aircraft.class)
                 .filter(ac -> !ac.getReg().isEmpty())
