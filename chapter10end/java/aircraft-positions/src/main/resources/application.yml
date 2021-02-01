@@ -1,0 +1,11 @@
+spring:
+  security:
+    oauth2:
+      client:
+        registration:
+          okta:
+            client-id: <your_assigned_client_id_here>
+            client-secret: <your_assigned_client_secret_here>
+        provider:
+          okta:
+            issuer-uri: https://<your_assigned_subdomain_here>.oktapreview.com/oauth2/default
