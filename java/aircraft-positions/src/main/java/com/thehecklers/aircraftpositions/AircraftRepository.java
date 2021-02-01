@@ -1,5 +1,5 @@
 package com.thehecklers.aircraftpositions;
 
-import org.springframework.data.repository.CrudRepository;
+import org.springframework.data.repository.reactive.ReactiveCrudRepository;
 
-public interface AircraftRepository extends CrudRepository<Aircraft, Long> {}
+public interface AircraftRepository extends ReactiveCrudRepository<Aircraft, Long> {}
