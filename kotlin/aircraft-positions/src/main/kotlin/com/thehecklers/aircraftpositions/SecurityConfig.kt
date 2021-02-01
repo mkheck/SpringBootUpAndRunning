@@ -1,47 +1,23 @@
 package com.thehecklers.aircraftpositions
 
 import org.springframework.context.annotation.Bean
-import org.springframework.security.config.annotation.web.builders.HttpSecurity
-import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity
-import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter
-import org.springframework.security.core.userdetails.User
-import org.springframework.security.core.userdetails.UserDetailsService
-import org.springframework.security.crypto.factory.PasswordEncoderFactories
-import org.springframework.security.provisioning.InMemoryUserDetailsManager
+import org.springframework.context.annotation.Configuration
+import org.springframework.security.oauth2.client.registration.ClientRegistrationRepository
+import org.springframework.security.oauth2.client.web.OAuth2AuthorizedClientRepository
+import org.springframework.security.oauth2.client.web.reactive.function.client.ServletOAuth2AuthorizedClientExchangeFilterFunction
+import org.springframework.web.reactive.function.client.WebClient
 
-
-@EnableWebSecurity
-class SecurityConfig : WebSecurityConfigurerAdapter() {
-    private val pwEncoder = PasswordEncoderFactories.createDelegatingPasswordEncoder()
-
+@Configuration
+class SecurityConfig {
     @Bean
-    fun authentication(): UserDetailsService {
-        val peter = User.builder()
-            .username("peter")
-            .password(pwEncoder.encode("ppassword"))
-            .roles("USER")
+    fun client(regRepo: ClientRegistrationRepository, cliRepo: OAuth2AuthorizedClientRepository): WebClient {
+        val filter = ServletOAuth2AuthorizedClientExchangeFilterFunction(regRepo, cliRepo)
+
+        filter.setDefaultOAuth2AuthorizedClient(true)
+
+        return WebClient.builder()
+            .baseUrl("http://localhost:7634/")
+            .apply(filter.oauth2Configuration())
             .build()
-
-        val jodie = User.builder()
-            .username("jodie")
-            .password(pwEncoder.encode("jpassword"))
-            .roles("USER", "ADMIN")
-            .build()
-
-        println("   >>> Peter's password: " + peter.password)
-        println("   >>> Jodie's password: " + jodie.password)
-
-        return InMemoryUserDetailsManager(peter, jodie)
-    }
-
-    @Throws(Exception::class)
-    override fun configure(http: HttpSecurity) {
-        http.authorizeRequests()
-            .mvcMatchers("/aircraftadmin/**").hasRole("ADMIN")
-            .anyRequest().authenticated()
-            .and()
-            .formLogin()
-            .and()
-            .httpBasic()
     }
 }

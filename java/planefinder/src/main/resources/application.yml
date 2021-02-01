@@ -1,0 +1,12 @@
+spring:
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          issuer-uri: https://<your_assigned_subdomain_here>.oktapreview.com/oauth2/default
+  rsocket:
+    server:
+      port: 7635
+
+server:
+  port: 7634

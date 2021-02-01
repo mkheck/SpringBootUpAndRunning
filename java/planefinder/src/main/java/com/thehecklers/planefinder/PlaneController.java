@@ -23,6 +23,12 @@ public class PlaneController {
         return pfService.getAircraft();
     }
 
+    @ResponseBody
+    @GetMapping("/aircraftadmin")
+    public Flux<Aircraft> getCurrentAircraftByAdmin() throws IOException {
+        return pfService.getAircraft();
+    }
+
     @MessageMapping("acstream")
     public Flux<Aircraft> getCurrentACStream() throws IOException {
         return pfService.getAircraft().concatWith(
