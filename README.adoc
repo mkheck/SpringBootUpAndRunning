@@ -1,0 +1,17 @@
+= Spring Boot: Up and Running
+
+== Maintainer
+
+* Mark Heckler
+* mailto:mark@thehecklers.com[mark@thehecklers.com]
+* https://twitter.com/mkheck[@mkheck on Twitter]
+
+== Purpose
+
+This repo contains the code to accompany my book https://bitly.com/springbootbook[Spring Boot: Up and Running] and will be updated as versions/dependencies evolve.
+
+*_Please star+watch this repo to be notified of updates!_*
+
+== Notes
+
+There are several branches in this repo. Please check the recommended branch out at the time specified in chapters 3-12 for best results.
