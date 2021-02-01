@@ -1,5 +1,5 @@
 package com.thehecklers.aircraftpositions
 
-import org.springframework.data.repository.reactive.ReactiveCrudRepository
+import org.springframework.data.repository.CrudRepository
 
-interface AircraftRepository: ReactiveCrudRepository<Aircraft, String>
+interface AircraftRepository: CrudRepository<Aircraft, Long>
