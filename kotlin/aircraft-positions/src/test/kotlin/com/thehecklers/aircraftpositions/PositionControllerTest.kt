@@ -28,7 +28,7 @@ internal class PositionControllerTest {
             "STL-SFO", "LJ", "ct",
             30000, 280, 440, 0, 0,
             39.2979849, -94.71921, 0.0, 0.0, 0.0,
-            false, false,
+            true, false,
             Instant.now(), Instant.now(), Instant.now()
         )
 
@@ -39,7 +39,7 @@ internal class PositionControllerTest {
             "SFO-STL", "LJ", "ct",
             40000, 65, 440, 0, 0,
             39.8560963, -104.6759263, 0.0, 0.0, 0.0,
-            false, false,
+            true, false,
             Instant.now(), Instant.now(), Instant.now()
         )
         Mockito.`when`(retriever.retrieveAircraftPositions())
