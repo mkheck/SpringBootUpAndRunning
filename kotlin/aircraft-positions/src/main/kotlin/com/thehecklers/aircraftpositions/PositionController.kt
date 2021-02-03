@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.ResponseBody
 import org.springframework.web.reactive.function.client.WebClient
 import org.springframework.web.reactive.function.client.bodyToFlux
 
-
 @Controller
 class PositionController(
     private val repository: AircraftRepository,
