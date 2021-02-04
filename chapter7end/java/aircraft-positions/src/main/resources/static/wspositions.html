@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Aircraft Position Report (Live Updates)</title>
+    <script>
+        var socket = new WebSocket('ws://' + window.location.host + '/ws');
+
+        socket.onopen = function () {
+            console.log('WebSocket connection is open for business, bienvenidos!');
+        };
+
+        socket.onmessage = function (message) {
+            var text = "";
+            var arrAC = message.data.split("Aircraft");
+            var ac = "";
+
+            for (i = 1; i < arrAC.length; i++) {
+                ac = (arrAC[i].endsWith(", "))
+                    ? arrAC[i].substring(0, arrAC[i].length - 2)
+                    : arrAC[i]
+
+                text += "Aircraft" + ac + "\n\n";
+            }
+
+            document.getElementById("positions").innerText = text;
+        };
+
+        socket.onclose = function () {
+            console.log('WebSocket connection closed, hasta la próxima!');
+        };
+    </script>
+</head>
+<body>
+<h1>Current Aircraft Positions</h1>
+<div style="border-style: solid; border-width: 2px; margin-top: 15px;
+        margin-bottom: 15px; margin-left: 15px; margin-right: 15px;">
+    <label id="positions"></label>
+</div>
+</body>
+</html>
