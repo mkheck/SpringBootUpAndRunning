@@ -54,8 +54,8 @@ internal class AircraftRepositoryTest {
         Assertions.assertEquals(Optional.of(ac2), repository.findById(ac2.id!!))
     }
 
-//    @Test
-//    fun testFindAll() {
-//        Assertions.assertEquals(listOf(ac1, ac2), repository.findAll())
-//    }
+    @Test
+    fun testFindAll() {
+        Assertions.assertEquals(listOf(ac1, ac2), repository.findAll())
+    }
 }
