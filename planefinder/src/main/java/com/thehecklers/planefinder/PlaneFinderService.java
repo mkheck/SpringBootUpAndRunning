@@ -10,18 +10,21 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 @Service
 public class PlaneFinderService {
     private final PlaneRepository repo;
+    private final FlightGenerator generator;
     private URL acURL;
     private final ObjectMapper om;
 
     @SneakyThrows
-    public PlaneFinderService(PlaneRepository repo) {
+    public PlaneFinderService(PlaneRepository repo, FlightGenerator generator) {
         this.repo = repo;
+        this.generator = generator;
 
-        acURL = new URL("http://192.168.1.193/ajax/aircraft");
+        acURL = new URL("http://192.168.1.139/ajax/aircraft");
         om = new ObjectMapper();
     }
 
@@ -41,7 +44,6 @@ public class PlaneFinderService {
                 }
             });
         } catch (IOException e) {
-            //e.printStackTrace();
             System.out.println("\n>>> IO Exception: " + e.getLocalizedMessage() +
                     ", generating and providing sample data.\n");
             return saveSamplePositions();
@@ -59,24 +61,15 @@ public class PlaneFinderService {
     }
 
     private Iterable<Aircraft> saveSamplePositions() {
+        final Random rnd = new Random();
+
         repo.deleteAll();
 
-        // Spring Airlines flight 001 en route, flying STL to SFO, at 30000' currently over Kansas City
-        var ac1 = new Aircraft("SAL001", "N12345", "SAL001", "LJ",
-                30000, 280, 440,
-                39.2979849, -94.71921);
+        for (int i = 0; i < rnd.nextInt(10); i++) {
+            repo.save(generator.generate());
+        }
 
-        // Spring Airlines flight 002 en route, flying SFO to STL, at 40000' currently over Denver
-        var ac2 = new Aircraft("SAL002", "N54321", "SAL002", "LJ",
-                40000, 65, 440,
-                39.8560963, -104.6759263);
-
-        // Spring Airlines flight 002 en route, flying SFO to STL, at 40000' currently just past DEN
-        var ac3 = new Aircraft("SAL002", "N54321", "SAL002", "LJ",
-                40000, 65, 440,
-                39.8412964, -105.0048267);
-
-        return repo.saveAll(List.of(ac1, ac2, ac3));
+        return repo.findAll();
     }
 }
 
