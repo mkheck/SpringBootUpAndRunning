@@ -32,32 +32,33 @@ public class PlaneFinderService {
         List<Aircraft> positions = new ArrayList<>();
 
         JsonNode aircraftNodes = null;
-        try {
-            aircraftNodes = om.readTree(acURL)
-                    .get("aircraft");
-
-            aircraftNodes.iterator().forEachRemaining(node -> {
-                try {
-                    positions.add(om.treeToValue(node, Aircraft.class));
-                } catch (JsonProcessingException e) {
-                    e.printStackTrace();
-                }
-            });
-        } catch (IOException e) {
-            System.out.println("\n>>> IO Exception: " + e.getLocalizedMessage() +
-                    ", generating and providing sample data.\n");
-            return saveSamplePositions();
-        }
-
-        if (positions.size() > 0) {
-            positions.forEach(System.out::println);
-
-            repo.deleteAll();
-            return repo.saveAll(positions);
-        } else {
-            System.out.println("\n>>> No positions to report, generating and providing sample data.\n");
-            return saveSamplePositions();
-        }
+//        try {
+//            aircraftNodes = om.readTree(acURL)
+//                    .get("aircraft");
+//
+//            aircraftNodes.iterator().forEachRemaining(node -> {
+//                try {
+//                    positions.add(om.treeToValue(node, Aircraft.class));
+//                } catch (JsonProcessingException e) {
+//                    e.printStackTrace();
+//                }
+//            });
+//        } catch (IOException e) {
+//            System.out.println("\n>>> IO Exception: " + e.getLocalizedMessage() +
+//                    ", generating and providing sample data.\n");
+//            return saveSamplePositions();
+//        }
+//
+//        if (positions.size() > 0) {
+//            positions.forEach(System.out::println);
+//
+//            repo.deleteAll();
+//            return repo.saveAll(positions);
+//        } else {
+//            System.out.println("\n>>> No positions to report, generating and providing sample data.\n");
+//            return saveSamplePositions();
+//        }
+        return saveSamplePositions();
     }
 
     private Iterable<Aircraft> saveSamplePositions() {
