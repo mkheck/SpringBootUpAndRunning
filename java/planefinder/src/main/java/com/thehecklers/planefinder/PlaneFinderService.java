@@ -5,6 +5,7 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.SneakyThrows;
 import org.springframework.stereotype.Service;
+import reactor.core.publisher.Flux;
 
 import java.io.IOException;
 import java.net.URL;
@@ -28,10 +29,10 @@ public class PlaneFinderService {
         om = new ObjectMapper();
     }
 
-    public Iterable<Aircraft> getAircraft() throws IOException {
+    public Flux<Aircraft> getAircraft() throws IOException {
         List<Aircraft> positions = new ArrayList<>();
 
-        JsonNode aircraftNodes = null;
+//        JsonNode aircraftNodes = null;
 //        try {
 //            aircraftNodes = om.readTree(acURL)
 //                    .get("aircraft");
@@ -61,16 +62,12 @@ public class PlaneFinderService {
         return saveSamplePositions();
     }
 
-    private Iterable<Aircraft> saveSamplePositions() {
+    private Flux<Aircraft> saveSamplePositions() {
         final Random rnd = new Random();
 
-        repo.deleteAll();
-
-        for (int i = 0; i < rnd.nextInt(10); i++) {
-            repo.save(generator.generate());
-        }
-
-        return repo.findAll();
+        return Flux.range(1, rnd.nextInt(10))
+                .map(i -> generator.generate())
+                .flatMap(repo::save); //item -> repo.save
     }
 }
 
