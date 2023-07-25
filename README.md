@@ -13,3 +13,13 @@ We appreciate, but do not require, attribution. An attribution usually includes 
 If you think your use of code examples falls outside fair use or the permission given here, feel free to contact us at <permissions@oreilly.com>.
 	  
 Please note that the examples are not production code and have not been carefully tested. They are provided "as-is" and come with no warranty of any kind.
+
+## Author's addendum
+
+I created this repository after issues arose with the repo on O'Reilly's site. Please use it as the primary source of truth and for communication with me: questions, comments, and feedback always welcome.
+
+One question that arises occasionally is where to find the scripts I used to create/configure the database container images for my examples. I documented the repo in early drafts, but at some point in the revision cycle, those references unfortunately disappeared. The scripts I used can be found [in the repo linked here](https://github.com/mkheck/containerscripts-database).
+
+NOTE: You will need to edit the scripts to reflect your particular machine/directory structure(s), but these are the very same scripts I used on my MacBook Pro.
+
+Thank you for choosing to share your time with me, and for always striving to improve.
