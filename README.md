@@ -23,3 +23,7 @@ One question that arises occasionally is where to find the scripts I used to cre
 NOTE: You will need to edit the scripts to reflect your particular machine/directory structure(s), but these are the very same scripts I used on my MacBook Pro.
 
 Thank you for choosing to share your time with me, and for always striving to improve.
+
+### 20260127
+
+Updates for Spring Boot 4 and relevant supporting projects/libraries are underway! Star+Watch to be notified as commits land. And again, thank you for joining me on this amazing Spring Boot journey!
