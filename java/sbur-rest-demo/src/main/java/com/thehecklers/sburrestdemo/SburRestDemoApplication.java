@@ -87,13 +87,10 @@ class Coffee {
 
 	@JsonCreator
 	public Coffee(@JsonProperty("id") String id, @JsonProperty("name") String name) {
-//	public Coffee(String id, String name) {
 		this.id = id;
 		this.name = name;
 	}
 
-//	@JsonCreator
-//	public Coffee(@JsonProperty("name") String name) {
 	public Coffee(String name) {
 		this(UUID.randomUUID().toString(), name);
 	}
