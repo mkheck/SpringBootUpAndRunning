@@ -1,5 +1,7 @@
 package com.thehecklers.sburrestdemo;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.annotation.PostConstruct;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
@@ -18,7 +20,7 @@ import java.util.UUID;
 @SpringBootApplication
 public class SburRestDemoApplication {
 
-	public static void main(String[] args) {
+	static void main(String[] args) {
 		SpringApplication.run(SburRestDemoApplication.class, args);
 	}
 
@@ -93,7 +95,8 @@ class Coffee {
 	public Coffee() {
 	}
 
-	public Coffee(String id, String name) {
+	@JsonCreator
+	public Coffee(@JsonProperty("id") String id, @JsonProperty("name") String name) {
 		this.id = id;
 		this.name = name;
 	}
