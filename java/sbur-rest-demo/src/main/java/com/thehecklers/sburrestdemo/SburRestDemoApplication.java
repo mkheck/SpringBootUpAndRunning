@@ -1,5 +1,7 @@
 package com.thehecklers.sburrestdemo;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.http.HttpStatus;
@@ -14,7 +16,7 @@ import java.util.UUID;
 @SpringBootApplication
 public class SburRestDemoApplication {
 
-	public static void main(String[] args) {
+	static void main(String[] args) {
 		SpringApplication.run(SburRestDemoApplication.class, args);
 	}
 
@@ -23,7 +25,7 @@ public class SburRestDemoApplication {
 @RestController
 @RequestMapping("/coffees")
 class RestApiDemoController {
-	private List<Coffee> coffees = new ArrayList<>();
+	private final List<Coffee> coffees = new ArrayList<>();
 
 	public RestApiDemoController() {
 		coffees.addAll(List.of(
@@ -83,7 +85,8 @@ class Coffee {
 	private final String id;
 	private String name;
 
-	public Coffee(String id, String name) {
+	@JsonCreator
+	public Coffee(@JsonProperty("id") String id, @JsonProperty("name") String name) {
 		this.id = id;
 		this.name = name;
 	}
