@@ -1,10 +1,11 @@
 package com.thehecklers.sburrestdemo
 
+import jakarta.annotation.PostConstruct
+import jakarta.persistence.Entity
+import jakarta.persistence.Id
 import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.boot.context.properties.ConfigurationProperties
 import org.springframework.boot.context.properties.ConfigurationPropertiesScan
-import org.springframework.boot.context.properties.ConstructorBinding
-import org.springframework.boot.context.properties.bind.Name
 import org.springframework.boot.runApplication
 import org.springframework.context.annotation.Bean
 import org.springframework.data.repository.CrudRepository
@@ -13,10 +14,6 @@ import org.springframework.http.ResponseEntity
 import org.springframework.stereotype.Component
 import org.springframework.web.bind.annotation.*
 import java.util.*
-import javax.annotation.PostConstruct
-import javax.persistence.Entity
-import javax.persistence.Id
-
 
 @SpringBootApplication
 @ConfigurationPropertiesScan
@@ -90,7 +87,6 @@ class Droid {
 }
 
 @ConfigurationProperties(prefix = "greeting")
-@ConstructorBinding
 class Greeting(
     val name: String,
     val coffee: String
