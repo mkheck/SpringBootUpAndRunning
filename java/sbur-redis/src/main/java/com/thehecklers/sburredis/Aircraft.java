@@ -39,7 +39,7 @@ public class Aircraft {
     private Instant bds40SeenTime;
 
     public String getLastSeenTime() {
-        return lastSeenTime.toString();
+        return (null != lastSeenTime) ? lastSeenTime.toString() : "";
     }
 
     public void setLastSeenTime(String lastSeenTime) {
@@ -51,7 +51,7 @@ public class Aircraft {
     }
 
     public String getPosUpdateTime() {
-        return posUpdateTime.toString();
+        return (null != posUpdateTime) ? posUpdateTime.toString() : "";
     }
 
     public void setPosUpdateTime(String posUpdateTime) {
@@ -63,7 +63,7 @@ public class Aircraft {
     }
 
     public String getBds40SeenTime() {
-        return bds40SeenTime.toString();
+        return (null != bds40SeenTime) ? bds40SeenTime.toString() : "";
     }
 
     public void setBds40SeenTime(String bds40SeenTime) {
