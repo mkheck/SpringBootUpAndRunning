@@ -1,15 +1,16 @@
 package com.thehecklers.sburjpa
 
 import com.fasterxml.jackson.annotation.JsonProperty
+import jakarta.persistence.Entity
+import jakarta.persistence.Id
 import java.time.Instant
-import javax.persistence.Entity
-import javax.persistence.GeneratedValue
-import javax.persistence.Id
 
 @Entity
 data class Aircraft(
     @Id
-    @GeneratedValue
+    //@GeneratedValue
+    // Since we receive Aircraft objects via API calls, they already have IDs. Since Boot 4.x, we must remove the
+    // @GeneratedValue annotation to prevent conflicts when saving to the underlying database table.
     val id: Long? = null,
     val callsign: String? = null,
     val squawk: String? = null,
