@@ -6,4 +6,4 @@ altitude INT, heading INT, speed INT, vert_rate INT, selected_altitude INT,
 lat DOUBLE, lon DOUBLE, barometer DOUBLE,
 polar_distance DOUBLE, polar_bearing DOUBLE,
 isadsb BOOLEAN, is_on_ground BOOLEAN,
-last_seen_time TIMESTAMP, pos_update_time TIMESTAMP, bds40seen_time TIMESTAMP);
+last_seen_time TIMESTAMP, pos_update_time TIMESTAMP, bds40_seen_time TIMESTAMP);

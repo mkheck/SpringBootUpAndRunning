@@ -5,6 +5,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
+
 import org.springframework.web.reactive.function.client.WebClient;
 
 @EnableScheduling
@@ -13,7 +14,7 @@ import org.springframework.web.reactive.function.client.WebClient;
 class PlaneFinderPoller {
     @NonNull
     private final AircraftRepository repository;
-    private WebClient client =
+        private WebClient client =
             WebClient.create("http://localhost:7634/aircraft");
 
     @Scheduled(fixedRate = 1000)

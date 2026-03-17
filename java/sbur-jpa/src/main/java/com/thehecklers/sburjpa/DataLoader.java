@@ -1,9 +1,9 @@
 package com.thehecklers.sburjpa;
 
+import jakarta.annotation.PostConstruct;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
 
-import javax.annotation.PostConstruct;
 import java.time.Instant;
 
 //@Component

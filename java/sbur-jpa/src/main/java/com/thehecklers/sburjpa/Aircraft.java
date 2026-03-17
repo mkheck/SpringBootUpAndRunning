@@ -1,13 +1,12 @@
 package com.thehecklers.sburjpa;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
 import java.time.Instant;
 
 @Entity
@@ -16,7 +15,9 @@ import java.time.Instant;
 @AllArgsConstructor
 public class Aircraft {
     @Id
-    @GeneratedValue
+    //@GeneratedValue
+    // Since we receive Aircraft objects via API calls, they already have IDs. Since Boot 4.x, we must remove the
+    // @GeneratedValue annotation to prevent conflicts when saving to the underlying database table.
     private Long id;
 
     private String callsign, squawk, reg, flightno, route, type, category;
