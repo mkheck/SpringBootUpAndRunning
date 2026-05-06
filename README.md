@@ -24,6 +24,10 @@ NOTE: You will need to edit the scripts to reflect your particular machine/direc
 
 Thank you for choosing to share your time with me, and for always striving to improve.
 
-### 20260127
+### Latest author notes
 
 Updates for Spring Boot 4 and relevant supporting projects/libraries are underway! Star+Watch to be notified as commits land. And again, thank you for joining me on this amazing Spring Boot journey!
+
+#### Chapter 6 End
+##### MongoDB app, Java & Kotlin versions
+Embedded MongoDB is no longer supported. To upgrade these apps, I created MongoDB infra (Dockerfile & run script) and pushed them to the "containerscripts" repo linked above. Like the other database examples, you will now need to run a MongoDB instance locally to successfully run the application.
