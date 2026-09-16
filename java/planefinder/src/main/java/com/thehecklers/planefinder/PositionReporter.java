@@ -15,13 +15,6 @@ public class PositionReporter {
 
     @Bean
     Supplier<Iterable<Aircraft>> reportPositions() {
-        return () -> {
-            try {
-                return pfService.getAircraft();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-            return List.of();
-        };
+        return () -> pfService.getAircraft();
     }
 }

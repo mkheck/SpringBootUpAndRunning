@@ -1,12 +1,12 @@
 package com.thehecklers.planefinder;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.SneakyThrows;
 import org.springframework.stereotype.Service;
+import tools.jackson.databind.JsonNode;
+import tools.jackson.databind.json.JsonMapper;
 
 import java.io.IOException;
+import java.net.URI;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
@@ -16,30 +16,30 @@ import java.util.Random;
 public class PlaneFinderService {
     private final PlaneRepository repo;
     private final FlightGenerator generator;
-    private URL acURL;
-    private final ObjectMapper om;
+    private final URL acURL;
+    private final JsonMapper jm;
 
     @SneakyThrows
-    public PlaneFinderService(PlaneRepository repo, FlightGenerator generator) {
+    public PlaneFinderService(PlaneRepository repo, FlightGenerator generator, JsonMapper jm) {
         this.repo = repo;
         this.generator = generator;
+        this.jm = jm;
 
-        acURL = new URL("http://192.168.1.139/ajax/aircraft");
-        om = new ObjectMapper();
+        acURL = URI.create("http://192.168.5.139/ajax/aircraft").toURL();
     }
 
-    public Iterable<Aircraft> getAircraft() throws IOException {
+    public Iterable<Aircraft> getAircraft() {
         List<Aircraft> positions = new ArrayList<>();
 
-        JsonNode aircraftNodes = null;
+        JsonNode aircraftNodes;
         try {
-            aircraftNodes = om.readTree(acURL)
+            aircraftNodes = jm.readTree(acURL.openStream())
                     .get("aircraft");
 
             aircraftNodes.iterator().forEachRemaining(node -> {
                 try {
-                    positions.add(om.treeToValue(node, Aircraft.class));
-                } catch (JsonProcessingException e) {
+                    positions.add(jm.treeToValue(node, Aircraft.class));
+                } catch (Exception e) {
                     e.printStackTrace();
                 }
             });
@@ -49,7 +49,7 @@ public class PlaneFinderService {
             return saveSamplePositions();
         }
 
-        if (positions.size() > 0) {
+        if (!positions.isEmpty()) {
             positions.forEach(System.out::println);
 
             repo.deleteAll();
@@ -72,4 +72,3 @@ public class PlaneFinderService {
         return repo.findAll();
     }
 }
-
